@@ -1,0 +1,41 @@
+{
+  "name": "hydroguard-backend",
+  "version": "1.0.0",
+  "description": "Backend API service for HydroGuard — AI-Powered Disaster Risk Assessment & Early Warning",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node src/utils/seed.js",
+    "test": "node src/services/riskEngine.test.js && node src/services/aiExplanation.test.js && node src/services/alert.test.js && node src/services/weather.test.js && node src/services/hydrology.test.js && node src/services/seismic.test.js && node src/services/emergency.test.js && node src/services/emergencyContacts.test.js && node src/services/offlinePack.test.js && node src/services/failureResilience.test.js && node src/services/dataValidation.test.js && node src/services/riskConfidence.test.js && node src/services/historicalValidation.test.js && node src/services/demoScenario.test.js && node src/services/securityHardening.test.js && node src/services/futureMLArchitecture.test.js && node src/services/offlineSafeMap.test.js",
+    "test:risk": "node src/services/riskEngine.test.js",
+    "test:ai": "node src/services/aiExplanation.test.js",
+    "test:alert": "node src/services/alert.test.js",
+    "test:weather": "node src/services/weather.test.js",
+    "test:hydro": "node src/services/hydrology.test.js",
+    "test:seismic": "node src/services/seismic.test.js",
+    "test:emergency": "node src/services/emergency.test.js",
+    "test:contacts": "node src/services/emergencyContacts.test.js",
+    "test:offline": "node src/services/offlinePack.test.js",
+    "test:resilience": "node src/services/failureResilience.test.js",
+    "test:validation": "node src/services/dataValidation.test.js",
+    "test:confidence": "node src/services/riskConfidence.test.js",
+    "test:backtest": "node src/services/historicalValidation.test.js",
+    "test:demo": "node src/services/demoScenario.test.js",
+    "test:security": "node src/services/securityHardening.test.js",
+    "test:ml": "node src/services/futureMLArchitecture.test.js",
+    "test:safemap": "node src/services/offlineSafeMap.test.js"
+  },
+
+
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
