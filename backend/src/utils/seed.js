@@ -13,28 +13,6 @@ import { calculateAllRisks } from "../services/riskEngine.service.js";
 
 const demoLocations = [
   {
-    name: "Kathmandu",
-    region: "Bagmati Province",
-    country: "Nepal",
-    latitude: 27.7172,
-    longitude: 85.3240,
-    elevation: 1400,
-    inputs: {
-      rainfall: 78,
-      riverLevel: 65,
-      slope: 60,
-      elevation: 50,
-      historicalRisk: 75,
-      seismicActivity: 80
-    },
-    emergencyFacilities: [
-      { name: "Kathmandu Medical College Hospital (Demo)", type: "Hospital", address: "Sinamangal, Kathmandu", phone: "+977 (1) 4469064", availability: "Emergency Triage Operational" },
-      { name: "Kathmandu Valley Disaster Shelter (Demo)", type: "Shelter", address: "Tundikhel, Kathmandu", phone: "+977 (1) 4224400", availability: "Capacity: 1,000 Evacuees" },
-      { name: "Nepal Police Emergency HQ (Demo)", type: "Police", address: "Naxal, Kathmandu", phone: "+977 100", availability: "Disaster Response Force Active" },
-      { name: "Juddha Fire Brigade (Demo)", type: "Fire Station", address: "New Road, Kathmandu", phone: "+977 101", availability: "Rescue & Pumping Teams Ready" }
-    ]
-  },
-  {
     name: "Mumbai",
     region: "Maharashtra",
     country: "India",
@@ -142,72 +120,6 @@ const demoLocations = [
       { name: "Gopeshwar Community Relief Shelter (Demo)", type: "Shelter", address: "Gopeshwar High Ground", phone: "+91 (555) 019-6002", availability: "Capacity: 500 People" },
       { name: "Chamoli Mountain Police HQ (Demo)", type: "Police", address: "Sector 1, Gopeshwar", phone: "+91 (555) 019-6003", availability: "Landslide Monitoring Patrol" },
       { name: "Chamoli Disaster Response Depot (Demo)", type: "Fire Station", address: "Valley Route, Chamoli", phone: "+91 (555) 019-6004", availability: "Heavy Earthmoving Equipment Ready" }
-    ]
-  },
-  {
-    name: "London",
-    region: "Greater London",
-    country: "United Kingdom",
-    latitude: 51.5074,
-    longitude: -0.1278,
-    elevation: 35,
-    inputs: {
-      rainfall: 25,
-      riverLevel: 22,
-      slope: 10,
-      elevation: 15,
-      historicalRisk: 28,
-      seismicActivity: 8
-    },
-    emergencyFacilities: [
-      { name: "St Thomas' Hospital (Demo)", type: "Hospital", address: "Westminster Bridge Rd, London", phone: "+44 (555) 019-7001", availability: "Full Operating Capacity" },
-      { name: "Southwark Relief Facility (Demo)", type: "Shelter", address: "Southwark, London", phone: "+44 (555) 019-7002", availability: "Capacity: 400 People" },
-      { name: "Metropolitan Police HQ (Demo)", type: "Police", address: "Victoria Embankment, London", phone: "+44 (555) 019-7003", availability: "Standard Monitoring" },
-      { name: "Lambeth River Rescue Station (Demo)", type: "Fire Station", address: "Albert Embankment, London", phone: "+44 (555) 019-7004", availability: "Marine Response Unit Ready" }
-    ]
-  },
-  {
-    name: "Tokyo",
-    region: "Kanto",
-    country: "Japan",
-    latitude: 35.6762,
-    longitude: 139.6503,
-    elevation: 40,
-    inputs: {
-      rainfall: 72,
-      riverLevel: 55,
-      slope: 28,
-      elevation: 20,
-      historicalRisk: 75,
-      seismicActivity: 85
-    },
-    emergencyFacilities: [
-      { name: "Tokyo Disaster Medical Center (Demo)", type: "Hospital", address: "Tachikawa, Tokyo", phone: "+81 (555) 019-8001", availability: "Seismic Isolation Wing Operational" },
-      { name: "Shinjuku Central Evacuation Shelter (Demo)", type: "Shelter", address: "Shinjuku Ward, Tokyo", phone: "+81 (555) 019-8002", availability: "Capacity: 1,200 Evacuees" },
-      { name: "Tokyo Metropolitan Police Dept (Demo)", type: "Police", address: "Kasumigaseki, Tokyo", phone: "+81 (555) 019-8003", availability: "Earthquake Quick-Response Unit" },
-      { name: "Tokyo Fire Dept Heavy Rescue (Demo)", type: "Fire Station", address: "Otemachi, Tokyo", phone: "+81 (555) 019-8004", availability: "Hyper Rescue Unit on Standby" }
-    ]
-  },
-  {
-    name: "New York",
-    region: "New York",
-    country: "United States",
-    latitude: 40.7128,
-    longitude: -74.0060,
-    elevation: 10,
-    inputs: {
-      rainfall: 40,
-      riverLevel: 35,
-      slope: 12,
-      elevation: 10,
-      historicalRisk: 42,
-      seismicActivity: 15
-    },
-    emergencyFacilities: [
-      { name: "Bellevue Hospital Trauma Center (Demo)", type: "Hospital", address: "1st Ave, New York, NY", phone: "+1 (555) 019-9001", availability: "Level 1 Trauma Center Ready" },
-      { name: "Manhattan Evacuation Center (Demo)", type: "Shelter", address: "Lower East Side, NY", phone: "+1 (555) 019-9002", availability: "Capacity: 750 People" },
-      { name: "NYPD 1st Precinct Emergency Unit (Demo)", type: "Police", address: "Ericsson Pl, New York, NY", phone: "+1 (555) 019-9003", availability: "Coastal Patrol Active" },
-      { name: "FDNY Marine 1 Fire & Rescue (Demo)", type: "Fire Station", address: "Hudson River Pier 53, NY", phone: "+1 (555) 019-9004", availability: "Surge Protection Vessels Ready" }
     ]
   }
 ];

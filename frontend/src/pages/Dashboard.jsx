@@ -46,8 +46,8 @@ import {
 import { detectRiskChange } from "../utils/riskChangeDetector";
 import { AlertTriangle, RefreshCw, WifiOff, HardDrive, FlaskConical, Radio } from "lucide-react";
 
-// Configurable Auto-Refresh Interval (Step 10: Default 5 minutes)
-export const RISK_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+// Configurable Auto-Refresh Interval (3 hours)
+export const RISK_REFRESH_INTERVAL_MS = 3 * 60 * 60 * 1000;
 
 export default function Dashboard() {
   const { isOnline } = useOnlineStatus();
@@ -413,7 +413,7 @@ export default function Dashboard() {
     }
   }, [isOnline, notificationPermission, fetchAIExplanation]);
 
-  // 3. Recurring 5-Minute Auto-Refresh Interval & Location Switching Hook
+  // 3. Recurring 3-Hour Auto-Refresh Interval & Location Switching Hook
   useEffect(() => {
     if (!selectedLocation) return;
 
@@ -438,7 +438,7 @@ export default function Dashboard() {
     // Execute initial fetch for the selected location
     executeRefresh(selectedLocation);
 
-    // Set recurring 5-minute interval timer (Step 10) only when online
+    // Set recurring 3-hour interval timer only when online
     if (isOnline) {
       const intervalId = setInterval(() => {
         executeRefresh(selectedLocation, { isAuto: true });
@@ -706,7 +706,7 @@ export default function Dashboard() {
       {/* Alert Accuracy Feedback System */}
       <AlertFeedbackForm
         alertId={displayAlert?.id || `alert-${selectedLocation?.id || "global"}-${displayRiskData?.overall?.level || "NORMAL"}`}
-        locationId={selectedLocation?.id || selectedLocation?._id || "kathmandu"}
+        locationId={selectedLocation?.id || selectedLocation?._id || "mumbai-in"}
         alertRiskLevel={displayRiskData?.overall?.level || "HIGH"}
         alertRiskScore={displayRiskData?.overall?.score || 82}
         alertType={displayAlert?.hazardTypes?.[0] || "FLOOD"}

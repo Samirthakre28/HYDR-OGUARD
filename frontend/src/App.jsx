@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "./components/layout/Sidebar";
 import MobileTopBar from "./components/layout/MobileTopBar";
 import AIGuide from "./components/layout/AIGuide";
+import WelcomeScreen from "./components/layout/WelcomeScreen";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import RiskMapPage from "./pages/RiskMapPage";
@@ -68,9 +69,14 @@ function AppContent() {
 }
 
 export default function App() {
+  const [showWelcome, setShowWelcome] = useState(true);
+
   return (
     <LocationProvider>
       <NavigationProvider>
+        {showWelcome && (
+          <WelcomeScreen onComplete={() => setShowWelcome(false)} />
+        )}
         <AppContent />
       </NavigationProvider>
     </LocationProvider>

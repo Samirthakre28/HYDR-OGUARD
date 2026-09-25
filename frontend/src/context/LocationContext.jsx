@@ -6,7 +6,7 @@ import { RISK_ENGINE_FALLBACK_INPUTS } from "../data/environmentalFallback";
 const LocationContext = createContext(null);
 const STORAGE_KEY = "hydroguard_selected_location";
 
-// Get initial selected location: 1. Previously saved location from localStorage, 2. Default location (Kathmandu, Nepal)
+// Get initial selected location: 1. Previously saved location from localStorage (validated), 2. Default location (Nashik, India)
 function getInitialSelectedLocation() {
   if (typeof window !== "undefined" && window.localStorage) {
     try {
@@ -14,14 +14,17 @@ function getInitialSelectedLocation() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && parsed.name) {
-          return parsed;
+          const matched = fallbackLocations.find(
+            (l) => l.id === parsed.id || l.name.toLowerCase() === parsed.name.toLowerCase()
+          );
+          if (matched) return matched;
         }
       }
     } catch (err) {
       console.warn("[HydroGuard] Could not read saved location from localStorage:", err.message);
     }
   }
-  return defaultLocation; // Kathmandu, Nepal
+  return defaultLocation; // Nashik, Maharashtra, India
 }
 
 export function LocationProvider({ children }) {
@@ -73,7 +76,7 @@ export function LocationProvider({ children }) {
             const matched = mergedLocations.find(
               (l) => l.name.toLowerCase() === prev?.name?.toLowerCase()
             );
-            return matched || prev || mergedLocations[0];
+            return matched || mergedLocations[0];
           });
         }
       } catch (err) {

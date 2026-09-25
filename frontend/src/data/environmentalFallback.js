@@ -23,7 +23,7 @@ export const SEISMIC_FALLBACK = {
   activityScore: 38
 };
 
-/** Stored Kathmandu terrain/history inputs already used by the risk controller. */
+/** Stored baseline terrain/history inputs used by the risk controller fallback. */
 export const STORED_RISK_INPUT_FALLBACK = {
   slope: 60,
   elevation: 50,
@@ -32,7 +32,7 @@ export const STORED_RISK_INPUT_FALLBACK = {
 
 /**
  * Normalized 0-100 inputs for POST /risk/calculate (existing Risk Engine).
- * Rainfall/river/seismic come from environmental fallback; slope/elevation/history from stored Kathmandu baseline.
+ * Rainfall/river/seismic come from environmental fallback; slope/elevation/history from stored regional baseline.
  */
 export const RISK_ENGINE_FALLBACK_INPUTS = {
   rainfall: WEATHER_FALLBACK.normalizedRainfall,
@@ -48,10 +48,10 @@ export const RISK_ENGINE_FALLBACK_INPUTS = {
  * Generic regional labels only — not official named facilities.
  */
 export function buildEmergencyFacilitiesFallback(location = {}) {
-  const lat = Number(location.latitude) || 27.7172;
-  const lon = Number(location.longitude) || 85.3240;
-  const name = location.name || "Kathmandu";
-  const locKey = location.id || location._id || "kathmandu-np";
+  const lat = Number(location.latitude) || 19.9975;
+  const lon = Number(location.longitude) || 73.7898;
+  const name = location.name || "Nashik";
+  const locKey = location.id || location._id || "nashik-in";
 
   return [
     {

@@ -60,7 +60,7 @@ export default function About() {
             <span>2. How Risk Assessment Works (The Deterministic Risk Engine)</span>
           </h2>
           <p className="text-sm text-slate-600 leading-relaxed">
-            HydroGuard relies on an open, published mathematical scoring system rather than opaque black-box neural networks. This ensures that every risk score is 100% reproducible, verifiable, and explainable:
+            HydroGuard relies on an open, published mathematical scoring system rather than opaque black-box neural networks. This ensures that every risk score is reproducible, verifiable, and explainable:
           </p>
 
           <div className="space-y-3">

@@ -24,7 +24,7 @@ export const HYDROLOGY_FALLBACK_VALUES = {
 /**
  * Returns deterministic fallback hydrological dataset
  */
-export function getKathmanduHydrologyFallback() {
+export function getRegionalHydrologyFallback() {
   return {
     riverLevel: HYDROLOGY_FALLBACK_VALUES.riverLevel,
     normalizedRiverRisk: HYDROLOGY_FALLBACK_VALUES.normalizedRiverRisk,
@@ -39,12 +39,16 @@ export function getKathmanduHydrologyFallback() {
   };
 }
 
+export function getKathmanduHydrologyFallback() {
+  return getRegionalHydrologyFallback();
+}
+
 /**
  * Returns the same deterministic hydrology fallback for any location.
  * Used only after live and cached hydrology are unavailable.
  */
 export function getLocationHydrologyFallback() {
-  return getKathmanduHydrologyFallback();
+  return getRegionalHydrologyFallback();
 }
 
 // Calibrated Hydrological Monitoring Station Registry for Primary Monitored Zones
@@ -113,45 +117,6 @@ export const RIVER_STATIONS = [
     warningLevel: 8.0,
     dangerLevel: 11.5,
     extremeLevel: 15.0
-  },
-  {
-    id: "station-london-thames",
-    name: "Thames Tidal & Kingston Gauge",
-    region: "London",
-    latitude: 51.5074,
-    longitude: -0.1278,
-    riverName: "River Thames",
-    unit: "m",
-    baselineLevel: 1.2,
-    warningLevel: 3.8,
-    dangerLevel: 5.2,
-    extremeLevel: 7.0
-  },
-  {
-    id: "station-tokyo-arakawa",
-    name: "Arakawa & Sumida Basin Gauge",
-    region: "Tokyo",
-    latitude: 35.6762,
-    longitude: 139.6503,
-    riverName: "Arakawa River",
-    unit: "m",
-    baselineLevel: 1.0,
-    warningLevel: 3.2,
-    dangerLevel: 4.8,
-    extremeLevel: 6.5
-  },
-  {
-    id: "station-ny-hudson",
-    name: "Hudson River Estuary Gauge",
-    region: "New York",
-    latitude: 40.7128,
-    longitude: -74.0060,
-    riverName: "Hudson River",
-    unit: "m",
-    baselineLevel: 0.8,
-    warningLevel: 2.5,
-    dangerLevel: 3.8,
-    extremeLevel: 5.0
   }
 ];
 

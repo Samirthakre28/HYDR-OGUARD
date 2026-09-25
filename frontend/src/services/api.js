@@ -313,7 +313,7 @@ export async function getEmergencyServices(locationId, signal) {
     if (isAbortLike(error)) throw error;
     const loc = presetLocations.find(
       (l) => l.id === locationId || l.name.toLowerCase() === String(locationId).split("-")[0].toLowerCase()
-    ) || { name: "Kathmandu", latitude: 27.7172, longitude: 85.3240, id: locationId };
+    ) || { name: "Nashik", latitude: 19.9975, longitude: 73.7898, id: locationId };
     const services = buildEmergencyFacilitiesFallback(loc);
     return {
       success: true,

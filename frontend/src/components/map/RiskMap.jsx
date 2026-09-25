@@ -7,29 +7,72 @@ import MapLegend from "./MapLegend";
 import { useLocation } from "../../context/LocationContext";
 import { buildEmergencyFacilitiesFallback } from "../../data/environmentalFallback";
 
-// Create custom high-visibility DivIcon for selected location marker
-function createLocationMarker(locationName) {
+// Helper function to map risk level to single clean risk influence zone styling
+function getZoneStyle(level) {
+  switch (level?.toUpperCase()) {
+    case "CRITICAL":
+      return {
+        color: "#dc2626",        // red border
+        fillColor: "#e11d48",    // red/pink fill
+        fillOpacity: 0.38,
+        weight: 2.5,
+        radius: 6500,
+        label: "Critical Risk Influence Zone"
+      };
+    case "HIGH":
+      return {
+        color: "#ea580c",        // orange border
+        fillColor: "#ea580c",    // orange fill
+        fillOpacity: 0.28,
+        weight: 2,
+        radius: 4800,
+        label: "High Risk Influence Zone"
+      };
+    case "MODERATE":
+      return {
+        color: "#d97706",        // amber border
+        fillColor: "#f59e0b",    // yellow/amber fill
+        fillOpacity: 0.18,
+        weight: 1.5,
+        radius: 3500,
+        label: "Moderate Advisory Influence Zone"
+      };
+    case "LOW":
+    default:
+      return {
+        color: "#059669",        // green border
+        fillColor: "#10b981",    // subtle green fill
+        fillOpacity: 0.10,
+        weight: 1.5,
+        radius: 2500,
+        label: "Low Threat Influence Zone"
+      };
+  }
+}
+
+// Create custom compact station marker icon (colored by risk level)
+function createLocationMarker(locationName, level = "HIGH") {
+  let badgeBg = "bg-orange-600";
+  if (level === "CRITICAL") badgeBg = "bg-rose-600";
+  else if (level === "MODERATE") badgeBg = "bg-amber-500";
+  else if (level === "LOW") badgeBg = "bg-emerald-600";
+
   return L.divIcon({
-    className: "hydroguard-location-marker terrasafe-location-marker",
+    className: "hydroguard-location-marker",
     html: `
-      <div class="relative flex items-center justify-center w-9 h-9">
-        <span class="absolute w-9 h-9 rounded-full bg-rose-500/40 animate-ping"></span>
-        <span class="absolute w-7 h-7 rounded-full bg-rose-500/60"></span>
-        <div class="relative w-8 h-8 rounded-full bg-rose-600 border-2 border-white shadow-lg flex items-center justify-center text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
+      <div class="relative flex items-center justify-center w-7 h-7">
+        <div class="relative w-7 h-7 rounded-full ${badgeBg} border-2 border-white shadow-md flex items-center justify-center text-white">
+          <div class="w-2.5 h-2.5 rounded-full bg-white"></div>
         </div>
       </div>
     `,
-    iconSize: [36, 36],
-    iconAnchor: [18, 36],
-    popupAnchor: [0, -36]
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+    popupAnchor: [0, -14]
   });
 }
 
-// Create custom high-visibility DivIcon for emergency facilities (Hospital, Police, Fire, Shelter)
+// Create custom compact marker icon for emergency facilities
 function createFacilityMarker(type) {
   let bgColor = "bg-indigo-600";
   let symbol = "📍";
@@ -51,7 +94,7 @@ function createFacilityMarker(type) {
   const cleanType = (type || "facility").toLowerCase().replace(/[^a-z0-9]/g, "-");
 
   return L.divIcon({
-    className: `hydroguard-facility-marker-${cleanType} terrasafe-facility-marker-${cleanType}`,
+    className: `hydroguard-facility-marker-${cleanType}`,
     html: `
       <div class="relative flex items-center justify-center w-7 h-7">
         <div class="relative w-7 h-7 rounded-full ${bgColor} border-2 border-white shadow-md flex items-center justify-center text-xs">
@@ -60,8 +103,8 @@ function createFacilityMarker(type) {
       </div>
     `,
     iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28]
+    iconAnchor: [14, 14],
+    popupAnchor: [0, -14]
   });
 }
 
@@ -69,7 +112,6 @@ function createFacilityMarker(type) {
 function MapController({ location, recenterCount, zoomLevel = 11 }) {
   const map = useMap();
 
-  // Invalidate map size on mount/resize to prevent grey tile gaps
   useEffect(() => {
     const timer = setTimeout(() => {
       map.invalidateSize();
@@ -77,7 +119,6 @@ function MapController({ location, recenterCount, zoomLevel = 11 }) {
     return () => clearTimeout(timer);
   }, [map]);
 
-  // Smoothly fly to selected location when coordinates or recenterCount change
   useEffect(() => {
     if (location && location.latitude && location.longitude) {
       map.flyTo([location.latitude, location.longitude], zoomLevel, {
@@ -102,9 +143,30 @@ export default function RiskMap({
   const { selectedLocation, triggerRecenter, recenterCount, riskData } = useLocation();
   const [showZones, setShowZones] = useState(true);
 
+  // Compute effective risk level & score dynamically for activeLayer
+  const effectiveRiskLevel = useMemo(() => {
+    if (!riskData) return selectedLocation?.defaultRisk || "MODERATE";
+    if (activeLayer === "flood") return riskData.flood?.level || riskData.overall?.level || "HIGH";
+    if (activeLayer === "landslide") return riskData.landslide?.level || riskData.overall?.level || "MODERATE";
+    if (activeLayer === "seismic") return riskData.seismic?.level || riskData.overall?.level || "LOW";
+    return riskData.overall?.level || "HIGH";
+  }, [riskData, activeLayer, selectedLocation]);
+
+  const effectiveRiskScore = useMemo(() => {
+    if (!riskData) return 50;
+    if (activeLayer === "flood") return riskData.flood?.score ?? riskData.overall?.score ?? 70;
+    if (activeLayer === "landslide") return riskData.landslide?.score ?? riskData.overall?.score ?? 60;
+    if (activeLayer === "seismic") return riskData.seismic?.score ?? riskData.overall?.score ?? 30;
+    return riskData.overall?.score ?? 78;
+  }, [riskData, activeLayer]);
+
+  const zoneStyle = useMemo(() => {
+    return getZoneStyle(effectiveRiskLevel);
+  }, [effectiveRiskLevel]);
+
   const customMarker = useMemo(() => {
-    return createLocationMarker(selectedLocation?.name);
-  }, [selectedLocation?.name]);
+    return createLocationMarker(selectedLocation?.name, effectiveRiskLevel);
+  }, [selectedLocation?.name, effectiveRiskLevel]);
 
   const fallbackFacilities = useMemo(
     () => (selectedLocation ? buildEmergencyFacilitiesFallback(selectedLocation) : []),
@@ -121,7 +183,7 @@ export default function RiskMap({
 
   const centerPos = [selectedLocation.latitude, selectedLocation.longitude];
 
-  // Robustly extract facility array whether passed as flat array or API response object
+  // Extract valid facilities array
   const rawFacilityArray = Array.isArray(savedFacilities)
     ? savedFacilities
     : (savedFacilities?.services || savedFacilities?.data?.services || savedFacilities?.data || []);
@@ -173,91 +235,37 @@ export default function RiskMap({
           zoomLevel={defaultZoom}
         />
 
-        {/* Modeled hazard visualization (not official government boundaries) */}
+        {/* ONE Single Clean Risk Influence Zone Circle */}
         {showZones && (
-          <>
-            {/* Outer: Low Risk Buffer Zone */}
-            <Circle
-              center={centerPos}
-              radius={10000}
-              pathOptions={{
-                color: "#10b981",
-                fillColor: "#10b981",
-                fillOpacity: 0.07,
-                weight: 1.5,
-                dashArray: "4, 4"
-              }}
-            >
-              <Popup>
-                <div className="text-xs">
-                  <strong className="text-emerald-700 block">Low Risk Perimeter (10 km)</strong>
-                  <span className="text-slate-500">Modeled visualization. Not an official government hazard boundary.</span>
+          <Circle
+            center={centerPos}
+            radius={zoneStyle.radius}
+            pathOptions={{
+              color: zoneStyle.color,
+              fillColor: zoneStyle.fillColor,
+              fillOpacity: zoneStyle.fillOpacity,
+              weight: zoneStyle.weight
+            }}
+          >
+            <Popup>
+              <div className="text-xs space-y-1">
+                <div className="font-bold text-slate-900 leading-tight">
+                  {selectedLocation.name} — {zoneStyle.label}
                 </div>
-              </Popup>
-            </Circle>
-
-            {/* Middle: Moderate Risk Zone */}
-            <Circle
-              center={centerPos}
-              radius={5500}
-              pathOptions={{
-                color: "#f59e0b",
-                fillColor: "#f59e0b",
-                fillOpacity: 0.12,
-                weight: 2
-              }}
-            >
-              <Popup>
-                <div className="text-xs">
-                  <strong className="text-amber-700 block">Moderate Advisory Zone (5.5 km)</strong>
-                  <span className="text-slate-500">Modeled visualization. Not an official government hazard boundary.</span>
+                <div className="text-[11px] font-semibold text-slate-700">
+                  Layer ({activeLayer.toUpperCase()}): <span className="font-bold">{effectiveRiskScore}% ({effectiveRiskLevel})</span>
                 </div>
-              </Popup>
-            </Circle>
-
-            {/* Inner: High Risk Zone */}
-            <Circle
-              center={centerPos}
-              radius={2400}
-              pathOptions={{
-                color: "#f43f5e",
-                fillColor: "#f43f5e",
-                fillOpacity: 0.22,
-                weight: 2.5
-              }}
-            >
-              <Popup>
-                <div className="text-xs">
-                  <strong className="text-rose-700 block">High Hazard Warning (2.4 km)</strong>
-                  <span className="text-slate-500">Modeled visualization. Not an official government hazard boundary.</span>
+                <div className="text-[10px] text-slate-500 italic pt-0.5 border-t border-slate-100 leading-normal">
+                  Risk influence zone — estimated impact area, not an exact flood boundary.
                 </div>
-              </Popup>
-            </Circle>
-
-            {/* Core: Critical Danger Center */}
-            <Circle
-              center={centerPos}
-              radius={900}
-              pathOptions={{
-                color: "#dc2626",
-                fillColor: "#dc2626",
-                fillOpacity: 0.35,
-                weight: 3
-              }}
-            >
-              <Popup>
-                <div className="text-xs">
-                  <strong className="text-red-700 block">Critical Hazard Epicenter (900 m)</strong>
-                  <span className="text-slate-500">Modeled visualization. Not an official government hazard boundary.</span>
-                </div>
-              </Popup>
-            </Circle>
-          </>
+              </div>
+            </Popup>
+          </Circle>
         )}
 
         {/* Selected Location Marker */}
         <Marker position={centerPos} icon={customMarker}>
-          <Popup className="hydroguard-custom-popup terrasafe-custom-popup">
+          <Popup className="hydroguard-custom-popup">
             <div className="p-1 text-xs">
               <div className="font-bold text-slate-900 text-sm">{selectedLocation.name}</div>
               <div className="text-slate-500 text-[11px] mb-1.5">{selectedLocation.region}, {selectedLocation.country}</div>
@@ -265,22 +273,22 @@ export default function RiskMap({
                 Lat: {selectedLocation.latitude.toFixed(4)}° | Long: {selectedLocation.longitude.toFixed(4)}°
               </div>
               {riskData?.overall && (
-                <div className="mt-1.5 space-y-0.5 text-[10px] text-slate-700">
-                  <div><strong>Overall:</strong> {riskData.overall.score} ({riskData.overall.level})</div>
-                  {riskData.flood && <div><strong>Flood:</strong> {riskData.flood.score} ({riskData.flood.level})</div>}
-                  {riskData.landslide && <div><strong>Landslide:</strong> {riskData.landslide.score} ({riskData.landslide.level})</div>}
-                  {riskData.seismic && <div><strong>Seismic:</strong> {riskData.seismic.score} ({riskData.seismic.level})</div>}
-                  <div className="text-slate-400">Layer: {activeLayer} · Risk Engine</div>
+                <div className="mt-1.5 space-y-0.5 text-[10px] text-slate-700 font-medium">
+                  <div><strong>Overall Risk:</strong> {riskData.overall.score}% ({riskData.overall.level})</div>
+                  {riskData.flood && <div><strong>Flood Risk:</strong> {riskData.flood.score}% ({riskData.flood.level})</div>}
+                  {riskData.landslide && <div><strong>Landslide Risk:</strong> {riskData.landslide.score}% ({riskData.landslide.level})</div>}
+                  {riskData.seismic && <div><strong>Seismic Risk:</strong> {riskData.seismic.score}% ({riskData.seismic.level})</div>}
+                  <div className="text-slate-400">Layer: {activeLayer.toUpperCase()} · Engine Computed</div>
                 </div>
               )}
-              <div className="mt-1.5 inline-flex items-center text-[10px] font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                {isOffline ? "Saved Offline Station" : "Active Analysis Node"}
+              <div className="mt-1.5 inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                {isOffline ? "Saved Offline Station" : "Active Monitored Station"}
               </div>
             </div>
           </Popup>
         </Marker>
 
-        {/* Emergency Facility Markers (Saved GPS Coordinates) */}
+        {/* Emergency Facility Markers */}
         {validFacilities.map((fac, idx) => {
           const typeStr = fac.type || "Hospital";
           const symbol = typeStr === "Hospital" ? "🏥" : typeStr === "Police" ? "🛡️" : typeStr.includes("Fire") ? "🚒" : "⛺";
@@ -294,7 +302,7 @@ export default function RiskMap({
               position={[fac.latitude, fac.longitude]}
               icon={createFacilityMarker(typeStr)}
             >
-              <Popup className="hydroguard-facility-popup terrasafe-facility-popup">
+              <Popup className="hydroguard-facility-popup">
                 <div className="p-1.5 text-xs min-w-[180px] max-w-[240px] space-y-1.5">
                   <div className="flex items-start justify-between gap-1 border-b border-slate-100 pb-1">
                     <div>
@@ -306,7 +314,7 @@ export default function RiskMap({
                     </div>
                     {isDemo && (
                       <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200 shrink-0">
-                        Fallback Facility
+                        Facility
                       </span>
                     )}
                   </div>
@@ -354,9 +362,9 @@ export default function RiskMap({
         onToggleZones={() => setShowZones(!showZones)}
       />
 
-      {/* Embedded Compact Legend Overlay */}
+      {/* Embedded Legend Overlay */}
       {showLegendOverlay && (
-        <div className="absolute bottom-3 right-3 z-[1000] pointer-events-auto max-w-[200px] hidden sm:block">
+        <div className="absolute bottom-3 right-3 z-[1000] pointer-events-auto max-w-[220px] hidden sm:block">
           <MapLegend compact={true} />
         </div>
       )}

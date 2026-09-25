@@ -32,7 +32,7 @@ export default function Home() {
   const [geoLocating, setGeoLocating] = useState(false);
   const [geoMessage, setGeoMessage] = useState(null);
 
-  // Home Page Animated Demo Risk Snapshot (30 to 69 range, 1s interval)
+  // Home Page Demo Risk Snapshot (30 to 69 range, 3-hour interval)
   const [demoScore, setDemoScore] = useState(48);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Home() {
       // Score strictly between 30 and 69
       const nextScore = Math.floor(Math.random() * 40) + 30;
       setDemoScore(nextScore);
-    }, 1000);
+    }, 3 * 60 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -565,7 +565,7 @@ export default function Home() {
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1">
                 <div className="flex items-center space-x-2 text-slate-900 font-bold text-sm">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>100% Explainable</span>
+                  <span>Fully Explainable</span>
                 </div>
                 <p className="text-xs text-slate-600">
                   Every risk score is generated using open, published formulas and weighted factors—never unexplainable black-box models.

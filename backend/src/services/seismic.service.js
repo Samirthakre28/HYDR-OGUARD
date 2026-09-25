@@ -22,7 +22,7 @@ export const SEISMIC_FALLBACK_VALUES = {
 /**
  * Returns deterministic fallback seismic dataset
  */
-export function getKathmanduSeismicFallback() {
+export function getRegionalSeismicFallback() {
   return {
     activityScore: SEISMIC_FALLBACK_VALUES.activityScore,
     seismicActivity: SEISMIC_FALLBACK_VALUES.activityScore,
@@ -39,12 +39,16 @@ export function getKathmanduSeismicFallback() {
   };
 }
 
+export function getKathmanduSeismicFallback() {
+  return getRegionalSeismicFallback();
+}
+
 /**
  * Returns the same deterministic seismic fallback for any location.
  * Used only after live and cached seismic data are unavailable.
  */
 export function getLocationSeismicFallback() {
-  return getKathmanduSeismicFallback();
+  return getRegionalSeismicFallback();
 }
 
 // Centralized Seismic Calculation Constants & Weights

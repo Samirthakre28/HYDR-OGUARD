@@ -17,7 +17,8 @@ import {
   PhoneCall,
   Info,
   ShieldCheck,
-  Maximize2
+  Maximize2,
+  Loader2
 } from "lucide-react";
 import RiskMap from "../components/map/RiskMap";
 import { useLocation } from "../context/LocationContext";
@@ -336,16 +337,27 @@ export default function RiskMapPage() {
 
               {mobilePanelExpanded && (
                 <div className="space-y-4 animate-in fade-in duration-150">
-                  {/* Overall Score */}
+                  {/* Overall Score / Multi-Hazard Index */}
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex items-center justify-between">
                     <div>
                       <div className="text-xs font-semibold text-slate-500">Multi-Hazard Index</div>
-                      <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-0.5">
-                        {riskData?.overall?.score ?? "--"}
-                        <span className="text-xs font-normal text-slate-400 ml-1">/ 100</span>
-                      </div>
+                      {(isLoadingRisk || isRefreshing) ? (
+                        <div className="text-xs font-bold text-emerald-700 flex items-center space-x-1.5 mt-1.5">
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                          <span>Loading risk data...</span>
+                        </div>
+                      ) : riskData?.overall ? (
+                        <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-0.5">
+                          {riskData.overall.score}
+                          <span className="text-xs font-normal text-slate-400 ml-1">/ 100</span>
+                        </div>
+                      ) : (
+                        <div className="text-xs font-semibold text-slate-500 mt-1">
+                          Risk data unavailable
+                        </div>
+                      )}
                     </div>
-                    {riskData?.overall && (
+                    {(!isLoadingRisk && !isRefreshing && riskData?.overall) && (
                       <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${getRiskBadge(riskData.overall.level)}`}>
                         {riskData.overall.level}
                       </span>
@@ -356,44 +368,65 @@ export default function RiskMapPage() {
                   <div className="space-y-2">
                     <div className="text-xs font-bold uppercase tracking-wider text-slate-400">Hazard Ratings</div>
 
+                    {/* Flood Risk */}
                     <div className="p-2.5 sm:p-3 bg-blue-50/50 border border-blue-100 rounded-xl flex items-center justify-between text-xs">
                       <div className="flex items-center space-x-2 text-slate-800">
                         <Droplets className="w-4 h-4 text-blue-600 shrink-0" />
                         <span className="font-semibold">Flood Risk</span>
                       </div>
                       <strong className="text-slate-900 font-bold">
-                        {riskData?.flood ? `${riskData.flood.score} (${riskData.flood.level})` : "--"}
+                        {(isLoadingRisk || isRefreshing)
+                          ? "Loading..."
+                          : riskData?.flood
+                          ? `${riskData.flood.score}% (${riskData.flood.level})`
+                          : "Data unavailable"}
                       </strong>
                     </div>
 
+                    {/* Landslide Risk */}
                     <div className="p-2.5 sm:p-3 bg-amber-50/50 border border-amber-100 rounded-xl flex items-center justify-between text-xs">
                       <div className="flex items-center space-x-2 text-slate-800">
                         <Mountain className="w-4 h-4 text-amber-600 shrink-0" />
                         <span className="font-semibold">Landslide Risk</span>
                       </div>
                       <strong className="text-slate-900 font-bold">
-                        {riskData?.landslide ? `${riskData.landslide.score} (${riskData.landslide.level})` : "--"}
+                        {(isLoadingRisk || isRefreshing)
+                          ? "Loading..."
+                          : riskData?.landslide
+                          ? `${riskData.landslide.score}% (${riskData.landslide.level})`
+                          : "Data unavailable"}
                       </strong>
                     </div>
 
+                    {/* Seismic Risk */}
                     <div className="p-2.5 sm:p-3 bg-rose-50/50 border border-rose-100 rounded-xl flex items-center justify-between text-xs">
                       <div className="flex items-center space-x-2 text-slate-800">
                         <Activity className="w-4 h-4 text-rose-600 shrink-0" />
                         <span className="font-semibold">Seismic Risk</span>
                       </div>
                       <strong className="text-slate-900 font-bold">
-                        {riskData?.seismic ? `${riskData.seismic.score} (${riskData.seismic.level})` : "--"}
+                        {(isLoadingRisk || isRefreshing)
+                          ? "Loading..."
+                          : riskData?.seismic
+                          ? `${riskData.seismic.score}% (${riskData.seismic.level})`
+                          : "Data unavailable"}
                       </strong>
                     </div>
                   </div>
 
-                  {/* Reliability Indicator */}
+                  {/* Telemetry Data Status Indicator */}
                   <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
                     <span className="flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                       <span>Data Status:</span>
                     </span>
-                    <span className="font-semibold text-slate-800">Live Telemetry Active</span>
+                    <span className="font-semibold text-slate-800">
+                      {(isLoadingRisk || isRefreshing)
+                        ? "Fetching Telemetry..."
+                        : riskData
+                        ? "Live Telemetry Active"
+                        : "Risk Assessment Unavailable"}
+                    </span>
                   </div>
 
                   {/* Action Buttons (>=44px touch targets) */}

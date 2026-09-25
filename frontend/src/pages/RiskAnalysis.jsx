@@ -570,90 +570,323 @@ export default function RiskAnalysis() {
                 <th className="py-2.5 px-3 text-right">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
-              <tr className="hover:bg-slate-50/80 transition-colors">
-                <td className="py-3 px-3 font-bold text-slate-800">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+              {/* 1. CWC River Data — Active */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
                   <a
                     href="https://cwc.gov.in/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-slate-800 hover:text-cyan-700"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
                   >
                     <span>CWC — Central Water Commission</span>
-                    <ExternalLink className="w-3 h-3 text-emerald-600" />
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                   </a>
                 </td>
-                <td className="py-3 px-3 text-slate-600">Hydrology & River Data</td>
-                <td className="py-3 px-3 text-right">
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Hydrology & River Data</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  {renderStatusBadge("LIVE")}
                   <a
-                    href="https://cwc.gov.in/"
+                    href="https://nwdp.nwic.gov.in/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
-                    <span>Visit Source</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <span>View Source ↗</span>
                   </a>
                 </td>
               </tr>
-              <tr className="hover:bg-slate-50/80 transition-colors">
-                <td className="py-3 px-3 font-bold text-slate-800">
+
+              {/* 2. SACHET Alerts — Active */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
                   <a
                     href="https://sachet.ndma.gov.in/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-slate-800 hover:text-amber-800"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
                   >
                     <span>SACHET — National Disaster Alert Portal</span>
-                    <ExternalLink className="w-3 h-3 text-emerald-600" />
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                   </a>
                 </td>
-                <td className="py-3 px-3 text-slate-600">Disaster Alerts & Early Warnings</td>
-                <td className="py-3 px-3 text-right">
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Disaster Alerts & Early Warnings</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  {renderStatusBadge("LIVE")}
                   <a
                     href="https://sachet.ndma.gov.in/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
-                    <span>Visit Source</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <span>View Source ↗</span>
                   </a>
                 </td>
               </tr>
-              <tr className="hover:bg-slate-50/80 transition-colors">
-                <td className="py-3 px-3 font-bold text-slate-800">
+
+              {/* 3. IMD Weather — Active */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
                   <a
                     href="https://mausam.imd.gov.in/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-slate-800 hover:text-sky-800"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
                   >
                     <span>IMD — India Meteorological Department</span>
-                    <ExternalLink className="w-3 h-3 text-emerald-600" />
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                   </a>
                 </td>
-                <td className="py-3 px-3 text-slate-600">Weather & Meteorological Information</td>
-                <td className="py-3 px-3 text-right">
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Weather & Meteorological Information</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  {renderStatusBadge("LIVE")}
                   <a
-                    href="https://mausam.imd.gov.in/"
+                    href="https://hydro.imd.gov.in/hydrometweb/landing.aspx"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
-                    <span>Visit Source</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <span>View Source ↗</span>
                   </a>
                 </td>
               </tr>
-              <tr className="hover:bg-slate-50/80 transition-colors">
-                <td className="py-3 px-3 font-bold text-slate-800">SRTM 30m Grid / DEM</td>
-                <td className="py-3 px-3 text-slate-600">Terrain Slope & Elevation</td>
-                <td className="py-3 px-3 text-right">{renderStatusBadge("STORED")}</td>
+
+              {/* 4. SRTM & Copernicus DEM — Terrain Slope & Elevation (Active Stored) */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <div className="flex items-center space-x-1.5">
+                    <span>SRTM 30m Grid & Copernicus DEM</span>
+                    <a
+                      href="https://earthexplorer.usgs.gov/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400"
+                      title="USGS SRTM Source"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Terrain Slope & Elevation</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  {renderStatusBadge("STORED")}
+                  <a
+                    href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
               </tr>
-              <tr className="hover:bg-slate-50/80 transition-colors">
-                <td className="py-3 px-3 font-bold text-slate-800">Historical Recurrence Database</td>
-                <td className="py-3 px-3 text-slate-600">Risk History Baseline</td>
+
+              {/* 5. OpenStreetMap — Active Map Infrastructure */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <a
+                    href="https://www.openstreetmap.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
+                  >
+                    <span>OpenStreetMap</span>
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  </a>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Road Network & Facility Context</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  {renderStatusBadge("LIVE")}
+                  <a
+                    href="https://www.openstreetmap.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
+              </tr>
+
+              {/* 6. NASA SMAP — Soil Moisture (Research / Reference Source) */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <a
+                    href="https://smap.jpl.nasa.gov/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
+                  >
+                    <span>NASA SMAP</span>
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  </a>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Soil Moisture & Surface Saturation</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  <span className="inline-flex items-center text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 uppercase">
+                    Research / Reference
+                  </span>
+                  <a
+                    href="https://data.nasa.gov/dataset/smap-l3-radiometer-global-daily-36-km-ease-grid-soil-moisture-v009"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
+              </tr>
+
+              {/* 7. ISRO / NRSC Bhuvan Flood Maps (Research / Reference Source) */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <a
+                    href="https://bhuvan.nrsc.gov.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
+                  >
+                    <span>ISRO / NRSC Bhuvan Flood Maps</span>
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  </a>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Historical Flood Inundation Maps</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  <span className="inline-flex items-center text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 uppercase">
+                    Research / Reference
+                  </span>
+                  <a
+                    href="https://bhuvan-app1.nrsc.gov.in/disaster/disaster.php?id=flood_hz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
+              </tr>
+
+              {/* 8. NASA GPM IMERG (Research / Reference Source) */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <a
+                    href="https://gpm.nasa.gov/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
+                  >
+                    <span>NASA GPM IMERG</span>
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  </a>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Satellite Precipitation Observation</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  <span className="inline-flex items-center text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 uppercase">
+                    Research / Reference
+                  </span>
+                  <a
+                    href="https://gpm.nasa.gov/data/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
+              </tr>
+
+              {/* 9. ESA CCI Soil Moisture (Research / Reference Source) */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <a
+                    href="https://climate.esa.int/en/projects/soil-moisture/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
+                  >
+                    <span>ESA CCI Soil Moisture</span>
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  </a>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Multi-Decadal Climate Baseline</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  <span className="inline-flex items-center text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 uppercase">
+                    Research / Reference
+                  </span>
+                  <a
+                    href="https://climate.esa.int/en/projects/soil-moisture/data/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
+              </tr>
+
+              {/* 10. ISRO / NRSC Land Cover (Research / Reference Source) */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <a
+                    href="https://bhuvan.nrsc.gov.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
+                  >
+                    <span>ISRO / NRSC Land Use & Cover</span>
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  </a>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Catchment Vegetation & Land Cover</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  <span className="inline-flex items-center text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 uppercase">
+                    Research / Reference
+                  </span>
+                  <a
+                    href="https://bhuvan.nrsc.gov.in/theme/landuse-landcover"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
+              </tr>
+
+              {/* 11. Copernicus ERA5 (Research / Reference Source) */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">
+                  <a
+                    href="https://cds.climate.copernicus.eu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-slate-800 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-400"
+                  >
+                    <span>Copernicus / ECMWF ERA5</span>
+                    <ExternalLink className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  </a>
+                </td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Historical Climate Reanalysis</td>
+                <td className="py-3 px-3 text-right flex items-center justify-end space-x-2">
+                  <span className="inline-flex items-center text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 uppercase">
+                    Research / Reference
+                  </span>
+                  <a
+                    href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    <span>View Source ↗</span>
+                  </a>
+                </td>
+              </tr>
+
+              {/* 12. Historical Recurrence Database */}
+              <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">Historical Recurrence Database</td>
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">Risk History Baseline</td>
                 <td className="py-3 px-3 text-right">{renderStatusBadge("DEMO DATA")}</td>
               </tr>
             </tbody>
@@ -885,13 +1118,13 @@ export default function RiskAnalysis() {
         <RiskMap className="h-[220px] w-full rounded-xl" interactive={false} showLegendOverlay={false} />
       </div>
 
-      {/* SECTION: COMMUNITY ALERT ACCURACY FEEDBACK */}
+      {/* SECTION: COMMUNITY ALERT FEEDBACK */}
       {feedbackSummary && feedbackSummary.totalFeedback > 0 && (
         <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 space-y-3 shadow-xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-              <h3 className="text-sm font-bold text-slate-900">Community Alert Accuracy Reports</h3>
+              <h3 className="text-sm font-bold text-slate-900">Community Alert Feedback Reports</h3>
             </div>
             <span className="text-[10px] font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full uppercase">
               {feedbackSummary.totalFeedback} Total Reports
@@ -900,7 +1133,7 @@ export default function RiskAnalysis() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
-              <div className="text-xs text-emerald-700 font-semibold">User Accuracy Rate</div>
+              <div className="text-xs text-emerald-700 font-semibold">User Verification Rate</div>
               <div className="text-2xl font-black text-emerald-800 mt-0.5">{feedbackSummary.accuracyPercentage}%</div>
             </div>
             <div className="bg-emerald-50/60 border border-emerald-100 rounded-xl p-3 text-center">

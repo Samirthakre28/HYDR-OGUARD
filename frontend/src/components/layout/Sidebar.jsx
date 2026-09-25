@@ -51,7 +51,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
   const navLinks = [
     { label: "Home", path: "/", icon: Home, description: "Overview & quick entry" },
-    { label: "Alerts", path: "/alerts", icon: Bell, description: "Active alerts & accuracy feedback" },
+    { label: "Alerts", path: "/alerts", icon: Bell, description: "Active alerts & feedback reporting" },
     { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard, description: "Live risk analytics" },
     { label: "Risk Map", path: "/risk-map", icon: Map, description: "Geospatial hazard layers" },
     { label: "Risk Analysis", path: "/risk-analysis", icon: Activity, description: "Explainability & factor breakdown" },
@@ -240,7 +240,7 @@ export default function Sidebar({ isOpen, onClose }) {
             </div>
             <p className="text-[11px] text-slate-500 flex items-center gap-1.5 leading-tight">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <span>100% Explainable MVP</span>
+              <span>Explainable Risk Engine</span>
             </p>
           </div>
         </div>

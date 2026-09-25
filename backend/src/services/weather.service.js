@@ -24,7 +24,7 @@ export const WEATHER_FALLBACK_VALUES = {
 /**
  * Returns deterministic fallback weather dataset
  */
-export function getKathmanduWeatherFallback() {
+export function getRegionalWeatherFallback() {
   return {
     temperature: WEATHER_FALLBACK_VALUES.temperature,
     humidity: WEATHER_FALLBACK_VALUES.humidity,
@@ -39,12 +39,16 @@ export function getKathmanduWeatherFallback() {
   };
 }
 
+export function getKathmanduWeatherFallback() {
+  return getRegionalWeatherFallback();
+}
+
 /**
  * Returns the same deterministic weather fallback for any location.
  * Used only after live and cached weather are unavailable.
  */
 export function getLocationWeatherFallback() {
-  return getKathmanduWeatherFallback();
+  return getRegionalWeatherFallback();
 }
 
 // Centralized Rainfall Normalization Thresholds (in mm)

@@ -336,7 +336,7 @@ export default function AIGuide({ inactivityThresholdMs = DEFAULT_INACTIVITY_THR
 
   const generateSmartAnswer = (query, location, risk) => {
     const q = query.toLowerCase().trim();
-    const locName = location?.name || "Kathmandu, Nepal";
+    const locName = location?.name || "Nashik, Maharashtra";
     const overallScore = risk?.overall?.score || risk?.overallRisk?.score || 65;
     const overallLevel = risk?.overall?.level || risk?.overallRisk?.level || "HIGH";
 
@@ -354,12 +354,12 @@ export default function AIGuide({ inactivityThresholdMs = DEFAULT_INACTIVITY_THR
 
     // 3. "How does HydroGuard work?"
     if (q.includes("how does hydroguard work") || q.includes("how hydroguard works") || q.includes("how it works") || q.includes("how does it work")) {
-      return `HydroGuard continuously monitors environmental telemetry (rainfall from Open-Meteo, river discharge from GloFAS, and seismic data from USGS). These signals are fed into a 100% deterministic mathematical Risk Engine to generate early warnings without AI hallucinations.`;
+      return `HydroGuard continuously monitors environmental telemetry (rainfall from Open-Meteo, river discharge from GloFAS, and seismic data from USGS). These signals are fed into a deterministic mathematical Risk Engine to generate early warnings without AI hallucinations.`;
     }
 
     // 4. "Where are emergency contacts?"
     if (q.includes("where are emergency contacts") || q.includes("emergency contact") || q.includes("helpline") || q.includes("phone number") || q.includes("contacts")) {
-      return `Verified quick emergency contacts are accessible on the Emergency page and the Quick Contacts card on your Dashboard. In Nepal, dial 100 for Police, 101 for Fire, 102 for Ambulance, and 1149 for NDRRMA. In India, dial 112 or 108. One-tap calling is supported.`;
+      return `Verified quick emergency contacts are accessible on the Emergency page and the Quick Contacts card on your Dashboard. In India, dial 112 for Emergency Response or 108 for Medical Ambulance. One-tap calling is supported.`;
     }
 
     // 5. "How do I use Risk Map?"

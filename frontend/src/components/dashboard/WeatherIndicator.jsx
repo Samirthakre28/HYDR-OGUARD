@@ -191,61 +191,61 @@ export default function WeatherIndicator({
             {/* 4 Metric Pills Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {/* Temperature */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-col justify-between hover:border-slate-300 transition-colors">
-                <div className="flex items-center justify-between text-slate-500 text-xs mb-2">
-                  <span className="font-medium">Temperature</span>
-                  <Thermometer className="w-4 h-4 text-amber-500" />
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-col justify-between hover:border-slate-300 transition-colors min-w-0">
+                <div className="flex items-center justify-between text-slate-500 text-xs mb-2 min-w-0">
+                  <span className="font-medium truncate">Temperature</span>
+                  <Thermometer className="w-4 h-4 text-amber-500 shrink-0" />
                 </div>
-                <div>
-                  <div className="text-xl font-bold text-slate-900">
+                <div className="min-w-0">
+                  <div className="text-xl font-bold text-slate-900 truncate">
                     {weather.temperature !== undefined ? `${weather.temperature}°C` : "N/A"}
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">Atmospheric Temp (°C)</div>
+                  <div className="text-[10px] text-slate-500 mt-0.5 leading-tight">Atmospheric Temp (°C)</div>
                 </div>
               </div>
 
               {/* Humidity */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-col justify-between hover:border-slate-300 transition-colors">
-                <div className="flex items-center justify-between text-slate-500 text-xs mb-2">
-                  <span className="font-medium">Humidity</span>
-                  <Droplets className="w-4 h-4 text-sky-500" />
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-col justify-between hover:border-slate-300 transition-colors min-w-0">
+                <div className="flex items-center justify-between text-slate-500 text-xs mb-2 min-w-0">
+                  <span className="font-medium truncate">Humidity</span>
+                  <Droplets className="w-4 h-4 text-sky-500 shrink-0" />
                 </div>
-                <div>
-                  <div className="text-xl font-bold text-slate-900">
+                <div className="min-w-0">
+                  <div className="text-xl font-bold text-slate-900 truncate">
                     {weather.humidity !== undefined ? `${weather.humidity}%` : "N/A"}
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">Relative Humidity (%)</div>
+                  <div className="text-[10px] text-slate-500 mt-0.5 leading-tight">Relative Humidity (%)</div>
                 </div>
               </div>
 
-              {/* Rainfall */}
-              <div className="p-3.5 rounded-xl bg-sky-50/50 border border-sky-200/70 flex flex-col justify-between hover:border-sky-300 transition-colors">
-                <div className="flex items-center justify-between text-sky-800 text-xs mb-2">
-                  <span className="font-semibold">Precipitation</span>
-                  <CloudRain className="w-4 h-4 text-sky-600" />
+              {/* Rainfall / Precipitation */}
+              <div className="p-3.5 rounded-xl bg-sky-50/50 border border-sky-200/70 flex flex-col justify-between hover:border-sky-300 transition-colors min-w-0">
+                <div className="flex items-center justify-between text-sky-800 text-xs mb-2 min-w-0">
+                  <span className="font-semibold truncate">Precipitation</span>
+                  <CloudRain className="w-4 h-4 text-sky-600 shrink-0" />
                 </div>
-                <div>
-                  <div className="text-xl font-bold text-slate-900">
+                <div className="min-w-0">
+                  <div className="text-xl font-bold text-slate-900 truncate">
                     {weather.rainfall !== undefined ? `${weather.rainfall} mm` : "0.0 mm"}
                   </div>
-                  <div className="text-[10px] font-medium text-sky-700 mt-0.5 flex items-center space-x-1">
-                    <span>Risk Weight:</span>
-                    <strong className="text-sky-900">{weather.normalizedRainfall ?? 0}/100</strong>
+                  <div className="text-[10px] font-medium text-sky-700 mt-0.5 flex flex-wrap items-baseline gap-x-1 min-w-0 leading-tight">
+                    <span className="shrink-0">Risk Weight:</span>
+                    <strong className="text-sky-900 shrink-0">{weather.normalizedRainfall ?? 0}/100</strong>
                   </div>
                 </div>
               </div>
 
               {/* Wind Speed */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-col justify-between hover:border-slate-300 transition-colors">
-                <div className="flex items-center justify-between text-slate-500 text-xs mb-2">
-                  <span className="font-medium">Wind Speed</span>
-                  <Wind className="w-4 h-4 text-teal-500" />
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-col justify-between hover:border-slate-300 transition-colors min-w-0">
+                <div className="flex items-center justify-between text-slate-500 text-xs mb-2 min-w-0">
+                  <span className="font-medium truncate">Wind Speed</span>
+                  <Wind className="w-4 h-4 text-teal-500 shrink-0" />
                 </div>
-                <div>
-                  <div className="text-xl font-bold text-slate-900">
+                <div className="min-w-0">
+                  <div className="text-xl font-bold text-slate-900 truncate">
                     {weather.windSpeed !== undefined ? `${weather.windSpeed} km/h` : "N/A"}
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">Surface Velocity (km/h)</div>
+                  <div className="text-[10px] text-slate-500 mt-0.5 leading-tight">Surface Velocity (km/h)</div>
                 </div>
               </div>
             </div>

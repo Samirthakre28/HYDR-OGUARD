@@ -4,16 +4,6 @@ import { escapeRegex } from "../middleware/inputSanitizer.js";
 
 export const FALLBACK_LOCATIONS = [
   {
-    _id: "kathmandu-np",
-    id: "kathmandu-np",
-    name: "Kathmandu",
-    region: "Bagmati Province",
-    country: "Nepal",
-    latitude: 27.7172,
-    longitude: 85.3240,
-    elevation: 1400
-  },
-  {
     _id: "mumbai-in",
     id: "mumbai-in",
     name: "Mumbai",
@@ -62,26 +52,6 @@ export const FALLBACK_LOCATIONS = [
     latitude: 30.4000,
     longitude: 79.3300,
     elevation: 1550
-  },
-  {
-    _id: "tokyo-jp",
-    id: "tokyo-jp",
-    name: "Tokyo",
-    region: "Kanto",
-    country: "Japan",
-    latitude: 35.6762,
-    longitude: 139.6503,
-    elevation: 40
-  },
-  {
-    _id: "london-uk",
-    id: "london-uk",
-    name: "London",
-    region: "Greater London",
-    country: "United Kingdom",
-    latitude: 51.5074,
-    longitude: -0.1278,
-    elevation: 35
   }
 ];
 
